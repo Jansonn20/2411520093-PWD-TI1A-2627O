@@ -11,25 +11,25 @@ Biar client dan server bisa nyambung, mereka butuh aturan komunikasi yang dinama
 4. HTML, CSS, JavaScript, PHP, dan MySQL
 Buat ngebangun web dinamis yang lengkap, lima teknologi ini punya peran dan pembagian tugasnya masing-masing:
 
-HTML: Rangkanya website. Tugasnya buat bikin struktur dasar kaya judul, paragraf, atau tombol.
+- HTML: Rangkanya website. Tugasnya buat bikin struktur dasar kaya judul, paragraf, atau tombol.
 
-CSS: Baju atau riasannya. Tugasnya ngatur tampilan, warna, layout, dan font biar web kelihatannya estetik.
+- CSS: Baju atau riasannya. Tugasnya ngatur tampilan, warna, layout, dan font biar web kelihatannya estetik.
 
-JavaScript: Ototnya di sisi depan. Tugasnya bikin halaman web jadi hidup dan interaktif, contohnya buat animasi atau fitur klik tanpa reload.
+- JavaScript: Ototnya di sisi depan. Tugasnya bikin halaman web jadi hidup dan interaktif, contohnya buat animasi atau fitur klik tanpa reload.
 
-PHP: Otak di sisi server. Tugasnya memproses logika aplikasi, ngolah data dari pengguna, dan ngobrol sama database.
+- PHP: Otak di sisi server. Tugasnya memproses logika aplikasi, ngolah data dari pengguna, dan ngobrol sama database.
 
-MySQL: Lemari penyimpanannya. Tugasnya menyimpan dan mengorganisasi semua data (kaya username, kata sandi, atau postingan) secara rapi dalam tabel.
+- MySQL: Lemari penyimpanannya. Tugasnya menyimpan dan mengorganisasi semua data (kaya username, kata sandi, atau postingan) secara rapi dalam tabel.
 
 5. Hubungan Antarteknologi
 Semua teknologi tadi saling bekerjasama dalam satu alur pas kita buka website:
 
-Kita (client) ngetik alamat web di browser, lalu browser ngirim HTTP Request ke server.
+- Kita (client) ngetik alamat web di browser, lalu browser ngirim HTTP Request ke server.
 
-Di server, skrip PHP bakal jalan buat memproses permintaan kita.
+- Di server, skrip PHP bakal jalan buat memproses permintaan kita.
 
-Kalau butuh data (misal data profil), PHP bakal ngambil data itu dari MySQL.
+- Kalau butuh data (misal data profil), PHP bakal ngambil data itu dari MySQL.
 
-Setelah dapet datanya, PHP meracik data tersebut bareng kode HTML, CSS, dan JavaScript, lalu dikirim balik ke browser lewat HTTP Response.
+- Setelah dapet datanya, PHP meracik data tersebut bareng kode HTML, CSS, dan JavaScript, lalu dikirim balik ke browser lewat HTTP Response.
 
-Browser kita tinggal menerjemahkan racikan HTML (struktur), CSS (tampilan), dan JavaScript (interaksi) jadi bentuk website utuh yang siap kita pakai.
+- Browser kita tinggal menerjemahkan racikan HTML (struktur), CSS (tampilan), dan JavaScript (interaksi) jadi bentuk website utuh yang siap kita pakai.
