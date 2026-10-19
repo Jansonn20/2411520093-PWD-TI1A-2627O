@@ -104,8 +104,15 @@
                 <p>Pemeriksaan rentang semester:
                     <?php echo $statusSemester; ?>
                 </p>
+                <p>IPK:
+                    <?php echo number_format($ipk, 2, ',', '.'); ?>
+                </p>
+                <p>Catatan tambahan:
+                    <?php echo $catatanTambahan === null ? "Belum ada" : $catatanTambahan;
+                    ?>
+                </p>
 
-                <p>Saya mahasiswa Program Studi Sistem Informasi.</p>
+                <p>Saya mahasiswa Program Studi Teknik Informasi.</p>
 
                 <h3>Target Belajar (Perulangan for)</h3>
                 <ol>
@@ -222,7 +229,11 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 M Janson N 2411520093</p>
+        <p>&copy;
+            <?= date("Y") ?>
+            <?php echo $namaMahasiswa; ?> [
+            <?= $nim ?>]
+        </p>
     </footer>
     <script src="script.js"></script>
 </body>
