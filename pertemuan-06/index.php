@@ -11,17 +11,17 @@
 <body>
 
     <?php
-    $nim = "0344300002";
-    $namaMahasiswa = "Yohanes Setiawan Japriadi";
-    $programStudi = "SI";
+    $nim = "2411520093";
+    $namaMahasiswa = "M Janson Niandra";
+    $programStudi = "TI";
     $tahunAkademik = "2026/2027";
-    $semester = 2;
-    $ipk = 3.75;
+    $semester = 5;
+    $ipk = 4.00;
     $statusAktif = true;
     $catatanTambahan = null;
 
     const NAMA_MATA_KULIAH = "Pemrograman Web Dasar";
-    const PROFIL_GITHUB = "satpamal";
+    const PROFIL_GITHUB = "Jansonn20";
     ?>
 
     <header>
@@ -44,8 +44,16 @@
 
     <main>
         <section id="home">
-            <h2>Selamat Datang</h2>
-            <p>Halo, saya M Janson Niandra. Saya sedang mempelajari Pemrograman Web Dasar.</p>
+            <p>Halo, saya <strong>
+                    <?php echo $namaMahasiswa; ?>
+                </strong>. Saya sedang mempelajari matakuliah
+                <strong>
+                    <?php print NAMA_MATA_KULIAH; ?>
+                </strong> pada tahun akademik
+                <?php echo $tahunAkademik;
+                ?>.
+            </p>
+
             <img src="img/foto-profil.jpg" alt="Foto profil M Janson Niandra">
         </section>
 
@@ -66,7 +74,11 @@
 
         <section id="contact">
             <h2>Kontak</h2>
-            <p>Kunjungi <a href="https://github.com/Jansonn20">profil GitHub saya</a>.</p>
+            <p>
+                Kunjungi
+                <a target="_blank" href="https://github.com/<?= PROFIL_GITHUB ?>">profil GitHub saya</a>.
+            </p>
+
 
             <form id="contactForm" action="index.html" method="get" novalidate>
 
