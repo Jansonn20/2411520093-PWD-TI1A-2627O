@@ -11,8 +11,14 @@
 <body>
 
     <?php
-    // Pengujian awal eksekusi PHP.
-    echo "PHP berhasil dijalankan.";
+    $nim = "0344300002";
+    $namaMahasiswa = "Yohanes Setiawan Japriadi";
+    $programStudi = "SI";
+    $tahunAkademik = "2026/2027";
+    $semester = 2;
+    $ipk = 3.75;
+    $statusAktif = true;
+    $catatanTambahan = null;
     ?>
 
     <header>
