@@ -109,30 +109,41 @@
 
                 <h3>Target Belajar (Perulangan for)</h3>
                 <ol>
-                                        <?php
-                                        // Perulangan for tanpa array; materi larik dibahas pada P9.
-                                        for ($i = 1; $i <= 5; $i++) {
-                                            echo "<li>Target belajar ke-" . $i . ": ";
-                                            switch ($i) {
-                                                case 1:
-                                                    echo "Memahami sintaks dasar PHP.";
-                                                    break;
-                                                case 2:
-                                                    echo "Menggunakan variabel dan konstanta.";
-                                                    break;
-                                                case 3:
-                                                    echo "Menerapkan operator dan percabangan.";
-                                                    break;
-                                                case 4:
-                                                    echo "Menggunakan perulangan for dan while.";
-                                                    break;
-                                                default:
-                                                    echo "Belum dipetakan";
-                                                    break;
-                                            }
-                                            echo "</li>";
-                                        }
-                                        ?>
+                    <?php
+                    // Perulangan for tanpa array; materi larik dibahas pada P9.
+                    for ($i = 1; $i <= 5; $i++) {
+                        echo "<li>Target belajar ke-" . $i . ": ";
+                        switch ($i) {
+                            case 1:
+                                echo "Memahami sintaks dasar PHP.";
+                                break;
+                            case 2:
+                                echo "Menggunakan variabel dan konstanta.";
+                                break;
+                            case 3:
+                                echo "Menerapkan operator dan percabangan.";
+                                break;
+                            case 4:
+                                echo "Menggunakan perulangan for dan while.";
+                                break;
+                            default:
+                                echo "Belum dipetakan";
+                                break;
+                        }
+                        echo "</li>";
+                    }
+                    ?>
+
+                </ol>
+                <h3>Semester (Perulangan while):</h3>
+                <ol>
+                    <?php
+                    $nomorSemester = 1;
+                    while ($nomorSemester <= 3) {
+                        echo "<li>Semester " . $nomorSemester . "</li>";
+                        $nomorSemester++; // operator penugasan
+                    }
+                    ?>
                 </ol>
 
             </article>
