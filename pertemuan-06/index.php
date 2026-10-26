@@ -1,3 +1,49 @@
+<?php
+
+echo $_GET["nama"];
+echo $_GET["email"];
+echo $_GET["semester"];
+
+$nim = "2411520093";
+$namaMahasiswa = "M Janson Niandra";
+$programStudi = "TI";
+$tahunAkademik = "2026/2027";
+$semester = 5;
+$ipk = 4.00;
+$statusAktif = true;
+$catatanTambahan = null;
+
+const NAMA_MATA_KULIAH = "Pemrograman Web Dasar";
+const PROFIL_GITHUB = "Jansonn20";
+
+$batasSemester = 8;
+$sisaSemester = $batasSemester - $semester;
+$semesterValid = $semester >= 1 && $semester <= $batasSemester;
+$statusSemester = ($semesterValid && $statusAktif) ? "Sesuai rentang" : "Perlu diperiksa";
+
+if ($semester < 3) {
+    $keteranganSemester = "Semester awal";
+} elseif ($semester <= 6) {
+    $keteranganSemester = "Semester menengah";
+} else {
+    $keteranganSemester = "Semester akhir";
+}
+
+$namaProdi = ($programStudi == "SI") ? "Sistem Informasi" : (($programStudi == "TI") ? "Teknik
+    Informatika" : "Lainnya");
+
+switch ($programStudi) {
+    case "SI":
+        $fokusProgramStudi = "Sistem informasi dan proses bisnis";
+        break;
+    case "TI":
+        $fokusProgramStudi = "Komputasi dan pengembangan perangkat lunak";
+        break;
+    default:
+        $fokusProgramStudi = "Belum ditentukan";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -9,47 +55,6 @@
 </head>
 
 <body>
-
-    <?php
-    $nim = "2411520093";
-    $namaMahasiswa = "M Janson Niandra";
-    $programStudi = "TI";
-    $tahunAkademik = "2026/2027";
-    $semester = 5;
-    $ipk = 4.00;
-    $statusAktif = true;
-    $catatanTambahan = null;
-
-    const NAMA_MATA_KULIAH = "Pemrograman Web Dasar";
-    const PROFIL_GITHUB = "Jansonn20";
-
-    $batasSemester = 8;
-    $sisaSemester = $batasSemester - $semester;
-    $semesterValid = $semester >= 1 && $semester <= $batasSemester;
-    $statusSemester = ($semesterValid && $statusAktif) ? "Sesuai rentang" : "Perlu diperiksa";
-
-    if ($semester < 3) {
-        $keteranganSemester = "Semester awal";
-    } elseif ($semester <= 6) {
-        $keteranganSemester = "Semester menengah";
-    } else {
-        $keteranganSemester = "Semester akhir";
-    }
-
-    $namaProdi = ($programStudi == "SI") ? "Sistem Informasi" : (($programStudi == "TI") ? "Teknik
-    Informatika" : "Lainnya");
-
-    switch ($programStudi) {
-        case "SI":
-            $fokusProgramStudi = "Sistem informasi dan proses bisnis";
-            break;
-        case "TI":
-            $fokusProgramStudi = "Komputasi dan pengembangan perangkat lunak";
-            break;
-        default:
-            $fokusProgramStudi = "Belum ditentukan";
-    }
-    ?>
 
     <header>
         <div class="header-top">
