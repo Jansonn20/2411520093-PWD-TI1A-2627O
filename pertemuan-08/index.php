@@ -102,6 +102,7 @@ switch ($programStudi) {
 				<li><a href="#home">Beranda</a></li>
 				<li><a href="#about">Tentang</a></li>
 				<li><a href="#contact">Kontak</a></li>
+				<li><a href="#rencana">Rencana Kegiatan</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -110,7 +111,8 @@ switch ($programStudi) {
 		<section id="home">
 			<h2>Selamat Datang</h2>
 			<p>Halo, saya <strong><?php echo $namaMahasiswa; ?></strong>. Saya sedang mempelajari matakuliah
-				<strong><?php print NAMA_MATA_KULIAH; ?></strong> pada tahun akademik <?php echo $tahunAkademik; ?>.</p>
+				<strong><?php print NAMA_MATA_KULIAH; ?></strong> pada tahun akademik <?php echo $tahunAkademik; ?>.
+			</p>
 
 			<img src="img/foto-profil.jpg" alt="Foto profil Nama Mahasiswa" />
 		</section>
@@ -257,14 +259,17 @@ switch ($programStudi) {
 					<p><strong>Semester:</strong> <?= htmlspecialchars($_SESSION["semester"] ?? "", ENT_QUOTES, "UTF-8") ?>
 					</p>
 					<p><strong>Tanggal Kunjungan:</strong>
-						<?= htmlspecialchars($_SESSION["tanggal"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
+						<?= htmlspecialchars($_SESSION["tanggal"] ?? "", ENT_QUOTES, "UTF-8") ?>
+					</p>
 					<p><strong>Jenis Pesan:</strong>
-						<?= htmlspecialchars($_SESSION["jenis_pesan"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
+						<?= htmlspecialchars($_SESSION["jenis_pesan"] ?? "", ENT_QUOTES, "UTF-8") ?>
+					</p>
 					<p><strong>Topik yang Diminati:</strong>
 						<?= htmlspecialchars(implode(", ", $_SESSION["minat"] ?? []), ENT_QUOTES, "UTF-8") ?>
 					</p>
 					<p><strong>Program Studi:</strong>
-						<?= htmlspecialchars($_SESSION["prodi"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
+						<?= htmlspecialchars($_SESSION["prodi"] ?? "", ENT_QUOTES, "UTF-8") ?>
+					</p>
 					<p><strong>Pesan:</strong> <?= nl2br(htmlspecialchars($_SESSION["pesan"] ?? "", ENT_QUOTES, "UTF-8")) ?>
 					</p>
 				</article>
