@@ -13,9 +13,7 @@ if (navToggle && navMenu) {
   });
 }
 
-// Validasi formulir Kontak.
-// Selector menggunakan atribut/class, bukan ID formulir tertentu,
-// sehingga formulir lain dapat ditambahkan dengan ID yang berbeda.
+// Validasi formulir Kontak P7.
 const contactForms = document.querySelectorAll(
   'form[data-validation="contact"]',
 );
@@ -26,7 +24,6 @@ contactForms.forEach((contactForm) => {
   const ambilInput = (nama) => contactForm.elements.namedItem(nama);
 
   contactForm.addEventListener("submit", (event) => {
-    // Mencegah pengiriman otomatis sebelum seluruh validasi selesai.
     event.preventDefault();
 
     const namaInput = ambilInput("nama");
@@ -35,9 +32,11 @@ contactForms.forEach((contactForm) => {
     const tanggalInput = ambilInput("tanggal");
     const prodiInput = ambilInput("prodi");
     const pesanInput = ambilInput("pesan");
+
     const jenisPesan = contactForm.querySelector(
       'input[name="jenis_pesan"]:checked',
     );
+
     const topikDipilih = contactForm.querySelectorAll(
       'input[name="minat[]"]:checked',
     );
@@ -107,8 +106,7 @@ contactForms.forEach((contactForm) => {
       return;
     }
 
-    // Mengirim formulir setelah seluruh validasi JavaScript berhasil.
-    // HTMLFormElement.submit() tidak memicu event submit kembali.
+    // Mengirim formulir setelah validasi berhasil.
     contactForm.submit();
   });
 
@@ -126,3 +124,76 @@ contactForms.forEach((contactForm) => {
     }
   });
 });
+
+// Validasi formulir Rencana Kegiatan P8.
+const planForm = document.querySelector(".js-plan-form");
+
+if (planForm) {
+  const formFeedback = planForm.querySelector("[data-form-feedback]");
+
+  planForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const namaKegiatan = planForm.elements["nama_kegiatan"].value.trim();
+    const kategori = planForm.querySelector(
+      'input[name="kategori"]:checked',
+    );
+    const tanggalKegiatan = planForm.elements["tanggal_kegiatan"].value;
+    const lokasi = planForm.elements["lokasi"].value.trim();
+    const deskripsi = planForm.elements["deskripsi"].value.trim();
+
+    const tampilkanKesalahan = (pesanKesalahan) => {
+      if (formFeedback) {
+        formFeedback.textContent = pesanKesalahan;
+        formFeedback.className = "form-feedback-error";
+      }
+    };
+
+    if (formFeedback) {
+      formFeedback.textContent = "";
+      formFeedback.className = "form-feedback";
+    }
+
+    if (namaKegiatan.length < 3 || namaKegiatan.length > 100) {
+      tampilkanKesalahan("Nama kegiatan harus 3 sampai 100 karakter.");
+      return;
+    }
+
+    if (!kategori) {
+      tampilkanKesalahan("Pilih kategori kegiatan.");
+      return;
+    }
+
+    if (tanggalKegiatan === "") {
+      tampilkanKesalahan("Tanggal kegiatan harus diisi.");
+      return;
+    }
+
+    if (lokasi.length < 3 || lokasi.length > 100) {
+      tampilkanKesalahan("Lokasi harus 3 sampai 100 karakter.");
+      return;
+    }
+
+    if (deskripsi.length === 0 || deskripsi.length > 300) {
+      tampilkanKesalahan("Deskripsi harus diisi dan maksimal 300 karakter.");
+      return;
+    }
+
+    // Mengirim formulir setelah validasi berhasil.
+    planForm.submit();
+  });
+
+  planForm.addEventListener("reset", () => {
+    if (formFeedback) {
+      formFeedback.textContent = "";
+      formFeedback.className = "form-feedback";
+    }
+  });
+
+  planForm.addEventListener("input", () => {
+    if (formFeedback) {
+      formFeedback.textContent = "";
+      formFeedback.className = "form-feedback";
+    }
+  });
+}
