@@ -1,26 +1,59 @@
 <?php
 session_start();
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+// P8: Memproses data formulir Rencana Kegiatan.
+if (
+	$_SERVER["REQUEST_METHOD"] === "POST" &&
+	($_POST["form_type"] ?? "") === "kegiatan"
+) {
 	$namaKegiatan = trim((string) ($_POST["nama_kegiatan"] ?? ""));
 	$kategori = trim((string) ($_POST["kategori"] ?? ""));
 	$tanggalKegiatan = trim((string) ($_POST["tanggal_kegiatan"] ?? ""));
 	$lokasi = trim((string) ($_POST["lokasi"] ?? ""));
 	$deskripsi = trim((string) ($_POST["deskripsi"] ?? ""));
 
-	// Menyimpan setiap nilai formulir ke dalam session secara terpisah.
-	$_SESSION["nama_kegiatan"] = $namaKegiatan;
-	$_SESSION["kategori"] = $kategori;
-	$_SESSION["tanggal"] = $tanggalKegiatan;
-	$_SESSION["lokasi"] = $lokasi;
-	$_SESSION["deskripsi"] = $deskripsi;
+	$errors = [];
 
-	// PRG: mencegah pengiriman POST berulang ketika halaman dimuat ulang.
+	if (strlen($namaKegiatan) < 3 || strlen($namaKegiatan) > 100) {
+		$errors[] = "Nama kegiatan harus 3 sampai 100 karakter.";
+	}
+
+	if (!in_array($kategori, ["akademik", "organisasi"], true)) {
+		$errors[] = "Kategori kegiatan harus dipilih.";
+	}
+
+	$date = DateTime::createFromFormat("!Y-m-d", $tanggalKegiatan);
+	if (!$date || $date->format("Y-m-d") !== $tanggalKegiatan) {
+		$errors[] = "Tanggal kegiatan tidak valid.";
+	}
+
+	if (strlen($lokasi) < 3 || strlen($lokasi) > 100) {
+		$errors[] = "Lokasi harus 3 sampai 100 karakter.";
+	}
+
+	if ($deskripsi === "" || strlen($deskripsi) > 300) {
+		$errors[] = "Deskripsi wajib diisi dan maksimal 300 karakter.";
+	}
+
+	if (empty($errors)) {
+		// Menyimpan setiap nilai formulir ke dalam session.
+		$_SESSION["rencana_nama_kegiatan"] = $namaKegiatan;
+		$_SESSION["rencana_kategori"] = $kategori;
+		$_SESSION["rencana_tanggal"] = $tanggalKegiatan;
+		$_SESSION["rencana_lokasi"] = $lokasi;
+		$_SESSION["rencana_deskripsi"] = $deskripsi;
+
+		unset($_SESSION["rencana_errors"]);
+	} else {
+		$_SESSION["rencana_errors"] = $errors;
+	}
+
+	// PRG: mencegah pengiriman POST berulang.
 	header("Location: index.php#rencana");
 	exit;
 }
 
-// P7: Memproses data formulir dan menyimpannya ke dalam session.
+// P7: Memproses data formulir Kontak dan menyimpannya ke dalam session.
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 	$nama = trim((string) ($_POST["nama"] ?? ""));
 	$email = trim((string) ($_POST["email"] ?? ""));
@@ -36,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 		$minat = [];
 	}
 
-	// Menyimpan setiap nilai formulir ke dalam session secara terpisah.
+	// Menyimpan setiap nilai formulir secara terpisah.
 	$_SESSION["nama"] = $nama;
 	$_SESSION["email"] = $email;
 	$_SESSION["semester"] = $semesterForm;
@@ -46,13 +79,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 	$_SESSION["prodi"] = $prodi;
 	$_SESSION["pesan"] = $pesan;
 
-	// PRG: mencegah pengiriman POST berulang ketika halaman dimuat ulang.
+	// PRG: mencegah pengiriman POST berulang.
 	header("Location: index.php#contact");
 	exit;
 }
 
-// Mengamankan data sebelum ditampilkan kembali ke halaman HTML.
-// P6: PHP dasar dan pemrograman sisi peladen
+// P6: PHP dasar dan pemrograman sisi peladen.
+
 // Bagian 1: Variabel dan konstanta
 $nim = "2411520093";
 $namaMahasiswa = "M Janson Niandra";
@@ -184,19 +217,17 @@ switch ($programStudi) {
 					$nomorSemester = 1;
 					while ($nomorSemester <= 3) {
 						echo "<li>Semester " . $nomorSemester . "</li>";
-						$nomorSemester++; // operator penugasan
+						$nomorSemester++;
 					}
 					?>
 				</ol>
 			</article>
 		</section>
 
-
 		<section id="rencana">
 			<h2>Rencana Kegiatan Mahasiswa</h2>
 
-			<form id="contactForm" class="js-contact-form" data-validation="contact" action="index.php" method="post"
-				novalidate>
+			<form id="planForm" class="js-plan-form" data-validation="plan" action="index.php" method="post" novalidate>
 
 				<input type="hidden" name="form_type" value="kegiatan">
 
@@ -218,19 +249,17 @@ switch ($programStudi) {
 
 				<div class="form-group">
 					<label for="tanggal_kegiatan">Tanggal Kegiatan</label><br />
-
 					<input class="input-form" type="date" id="tanggal_kegiatan" name="tanggal_kegiatan" required />
 				</div>
 
 				<div class="form-group">
 					<label for="lokasi">Lokasi Kegiatan</label><br />
 					<input class="input-form" type="text" id="lokasi" name="lokasi"
-						placeholder="Masukkan Lokasi kegiatan" minlength="3" maxlength="100" required />
+						placeholder="Masukkan lokasi kegiatan" minlength="3" maxlength="100" required />
 				</div>
 
 				<div class="form-group">
 					<label for="deskripsi">Deskripsi</label><br />
-
 					<textarea class="input-form" id="deskripsi" name="deskripsi" maxlength="300"
 						placeholder="Tulis deskripsi kegiatan Anda" required></textarea>
 				</div>
@@ -240,38 +269,41 @@ switch ($programStudi) {
 				<p class="form-feedback" data-form-feedback aria-live="polite"></p>
 			</form>
 
+			<?php if (!empty($_SESSION["rencana_errors"])): ?>
+				<ul class="form-feedback-error">
+					<?php foreach ($_SESSION["rencana_errors"] as $error): ?>
+						<li><?= htmlspecialchars($error, ENT_QUOTES, "UTF-8") ?></li>
+					<?php endforeach; ?>
+				</ul>
+				<?php unset($_SESSION["rencana_errors"]); ?>
+			<?php endif; ?>
 
-			<?php if (isset($_SESSION["rencana_kegiatan"])): ?>
+			<?php if (isset($_SESSION["rencana_nama_kegiatan"])): ?>
 				<article id="hasilRencana" class="submission-result" aria-live="polite">
 					<h3>Data Rencana Kegiatan yang Dikirim</h3>
 
 					<p><strong>Nama Kegiatan:</strong>
-						<?= htmlspecialchars($_SESSION["nama_kegiatan"] ?? "", ENT_QUOTES, "UTF-8") ?>
+						<?= htmlspecialchars($_SESSION["rencana_nama_kegiatan"], ENT_QUOTES, "UTF-8") ?>
 					</p>
 
 					<p><strong>Kategori Kegiatan:</strong>
-						<?= htmlspecialchars($_SESSION["kategori"] ?? "", ENT_QUOTES, "UTF-8") ?>
+						<?= htmlspecialchars($_SESSION["rencana_kategori"], ENT_QUOTES, "UTF-8") ?>
 					</p>
 
 					<p><strong>Tanggal Kegiatan:</strong>
-						<?= htmlspecialchars($_SESSION["tanggal_kegiatan"] ?? "", ENT_QUOTES, "UTF-8") ?>
+						<?= htmlspecialchars($_SESSION["rencana_tanggal"], ENT_QUOTES, "UTF-8") ?>
 					</p>
 
 					<p><strong>Lokasi Kegiatan:</strong>
-						<?= htmlspecialchars($_SESSION["lokasi"] ?? "", ENT_QUOTES, "UTF-8") ?>
+						<?= htmlspecialchars($_SESSION["rencana_lokasi"], ENT_QUOTES, "UTF-8") ?>
 					</p>
 
 					<p><strong>Deskripsi Kegiatan:</strong>
-						<?= nl2br(htmlspecialchars($_SESSION["deskripsi"] ?? "", ENT_QUOTES, "UTF-8")) ?>
+						<?= nl2br(htmlspecialchars($_SESSION["rencana_deskripsi"], ENT_QUOTES, "UTF-8")) ?>
 					</p>
 				</article>
 			<?php endif; ?>
-
 		</section>
-
-
-
-
 
 		<section id="contact">
 			<h2>Kontak</h2>
@@ -283,29 +315,26 @@ switch ($programStudi) {
 
 			<form id="contactForm" class="js-contact-form" data-validation="contact" action="index.php" method="post"
 				novalidate>
+
 				<div class="form-group">
 					<label for="nama">Nama Lengkap</label><br />
-
 					<input class="input-form" type="text" id="nama" name="nama" placeholder="Masukkan nama lengkap"
 						minlength="3" maxlength="50" required />
 				</div>
 
 				<div class="form-group">
 					<label for="email">Email</label><br />
-
 					<input class="input-form" type="email" id="email" name="email" placeholder="nama@email.com"
 						required />
 				</div>
 
 				<div class="form-group">
 					<label for="semester">Semester</label><br />
-
 					<input class="input-form" type="number" id="semester" name="semester" min="1" max="14" required />
 				</div>
 
 				<div class="form-group">
 					<label for="tanggal">Tanggal Kunjungan</label><br />
-
 					<input class="input-form" type="date" id="tanggal" name="tanggal" required />
 				</div>
 
@@ -331,7 +360,6 @@ switch ($programStudi) {
 
 				<div class="form-group">
 					<label for="prodi">Program Studi</label><br />
-
 					<select class="input-form" id="prodi" name="prodi" required>
 						<option value="">-- Pilih Program Studi --</option>
 						<option value="SI">Sistem Informasi</option>
@@ -341,7 +369,6 @@ switch ($programStudi) {
 
 				<div class="form-group">
 					<label for="pesan">Pesan</label><br />
-
 					<textarea class="input-form" id="pesan" name="pesan" maxlength="300" placeholder="Tulis pesan Anda"
 						required></textarea>
 				</div>
@@ -354,24 +381,30 @@ switch ($programStudi) {
 			<?php if (isset($_SESSION["nama"])): ?>
 				<article id="hasilKontak" class="submission-result" aria-live="polite">
 					<h3>Data Formulir yang Dikirim</h3>
-					<p><strong>Nama Lengkap:</strong> <?= htmlspecialchars($_SESSION["nama"] ?? "", ENT_QUOTES, "UTF-8") ?>
+
+					<p><strong>Nama Lengkap:</strong>
+						<?= htmlspecialchars($_SESSION["nama"], ENT_QUOTES, "UTF-8") ?>
 					</p>
-					<p><strong>Email:</strong> <?= htmlspecialchars($_SESSION["email"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
-					<p><strong>Semester:</strong> <?= htmlspecialchars($_SESSION["semester"] ?? "", ENT_QUOTES, "UTF-8") ?>
+					<p><strong>Email:</strong>
+						<?= htmlspecialchars($_SESSION["email"], ENT_QUOTES, "UTF-8") ?>
+					</p>
+					<p><strong>Semester:</strong>
+						<?= htmlspecialchars($_SESSION["semester"], ENT_QUOTES, "UTF-8") ?>
 					</p>
 					<p><strong>Tanggal Kunjungan:</strong>
-						<?= htmlspecialchars($_SESSION["tanggal"] ?? "", ENT_QUOTES, "UTF-8") ?>
+						<?= htmlspecialchars($_SESSION["tanggal"], ENT_QUOTES, "UTF-8") ?>
 					</p>
 					<p><strong>Jenis Pesan:</strong>
-						<?= htmlspecialchars($_SESSION["jenis_pesan"] ?? "", ENT_QUOTES, "UTF-8") ?>
+						<?= htmlspecialchars($_SESSION["jenis_pesan"], ENT_QUOTES, "UTF-8") ?>
 					</p>
 					<p><strong>Topik yang Diminati:</strong>
 						<?= htmlspecialchars(implode(", ", $_SESSION["minat"] ?? []), ENT_QUOTES, "UTF-8") ?>
 					</p>
 					<p><strong>Program Studi:</strong>
-						<?= htmlspecialchars($_SESSION["prodi"] ?? "", ENT_QUOTES, "UTF-8") ?>
+						<?= htmlspecialchars($_SESSION["prodi"], ENT_QUOTES, "UTF-8") ?>
 					</p>
-					<p><strong>Pesan:</strong> <?= nl2br(htmlspecialchars($_SESSION["pesan"] ?? "", ENT_QUOTES, "UTF-8")) ?>
+					<p><strong>Pesan:</strong>
+						<?= nl2br(htmlspecialchars($_SESSION["pesan"], ENT_QUOTES, "UTF-8")) ?>
 					</p>
 				</article>
 			<?php endif; ?>
@@ -381,6 +414,7 @@ switch ($programStudi) {
 	<footer>
 		<p>&copy; <?= date("Y") ?> <?php echo $namaMahasiswa; ?> [<?= $nim ?>]</p>
 	</footer>
+
 	<script src="script.js"></script>
 </body>
 
