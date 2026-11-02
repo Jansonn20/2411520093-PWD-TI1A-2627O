@@ -197,14 +197,14 @@ section {
 
 
 /* Bagian Rencana Kegiatan P8 */
-#planForm {
+#rencana {
   background-color: #ffffff;
   border: 1px solid #d0d7de;
   padding: 20px;
   margin: 0;
 }
 
-#planForm h2 {
+#rencana h2 {
   color: #003366;
   border-bottom: 2px solid #003366;
   padding-bottom: 6px;
@@ -212,17 +212,17 @@ section {
   margin-bottom: 16px;
 }
 
-#planForm label {
+#rencana label {
   color: #1f2937;
   font-weight: bold;
 }
 
-#planForm textarea {
+#rencana textarea {
   min-height: 80px;
   resize: vertical;
 }
 
-#planForm button {
+#rencana button {
   background-color: #003366;
   color: #ffffff;
   font-weight: bold;
@@ -232,16 +232,16 @@ section {
   cursor: pointer;
 }
 
-#planForm button:hover,
+#rencana button:hover,
 #contact button:hover {
   background-color: #1f4e78;
 }
 
-#planForm input[type="radio"] {
+#rencana input[type="radio"] {
   margin-right: 6px;
 }
 
-#planForm .form-group {
+#rencana .form-group {
   margin: 12px 0;
 }
 
@@ -285,7 +285,7 @@ footer p {
     grid-template-columns: 1fr 1fr;
   }
 
-  #planForm {
+  #rencana {
     grid-column: 1 / -1;
   }
 
