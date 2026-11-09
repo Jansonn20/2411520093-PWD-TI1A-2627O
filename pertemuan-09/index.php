@@ -1,6 +1,15 @@
 <?php
 session_start();
 
+function bersihkan($teks)
+{
+	return htmlspecialchars($teks ?? "", ENT_QUOTES, "UTF-8");
+}
+
+echo ("<p> hai </p>");
+
+echo bersihkan("<p> hai </p>");
+
 // P7: Memproses data formulir dan menyimpannya ke dalam session.
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 	$nama = trim((string) ($_POST["nama"] ?? ""));
@@ -110,7 +119,8 @@ switch ($programStudi) {
 		<section id="home">
 			<h2>Selamat Datang</h2>
 			<p>Halo, saya <strong><?php echo $namaMahasiswa; ?></strong>. Saya sedang mempelajari matakuliah
-				<strong><?php print NAMA_MATA_KULIAH; ?></strong> pada tahun akademik <?php echo $tahunAkademik; ?>.</p>
+				<strong><?php print NAMA_MATA_KULIAH; ?></strong> pada tahun akademik <?php echo $tahunAkademik; ?>.
+			</p>
 
 			<img src="img/foto-profil.jpg" alt="Foto profil Nama Mahasiswa" />
 		</section>
@@ -251,21 +261,24 @@ switch ($programStudi) {
 			<?php if (isset($_SESSION["nama"])): ?>
 				<article id="hasilKontak" class="submission-result" aria-live="polite">
 					<h3>Data Formulir yang Dikirim</h3>
-					<p><strong>Nama Lengkap:</strong> <?= htmlspecialchars($_SESSION["nama"] ?? "", ENT_QUOTES, "UTF-8") ?>
+					<p><strong>Nama Lengkap:</strong> <?= bersihkan($_SESSION["nama"] ?? "", ENT_QUOTES, "UTF-8") ?>
 					</p>
-					<p><strong>Email:</strong> <?= htmlspecialchars($_SESSION["email"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
-					<p><strong>Semester:</strong> <?= htmlspecialchars($_SESSION["semester"] ?? "", ENT_QUOTES, "UTF-8") ?>
+					<p><strong>Email:</strong> <?= bersihkan($_SESSION["email"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
+					<p><strong>Semester:</strong> <?= bersihkan($_SESSION["semester"] ?? "", ENT_QUOTES, "UTF-8") ?>
 					</p>
 					<p><strong>Tanggal Kunjungan:</strong>
-						<?= htmlspecialchars($_SESSION["tanggal"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
+						<?= bersihkan($_SESSION["tanggal"] ?? "", ENT_QUOTES, "UTF-8") ?>
+					</p>
 					<p><strong>Jenis Pesan:</strong>
-						<?= htmlspecialchars($_SESSION["jenis_pesan"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
+						<?= bersihkan($_SESSION["jenis_pesan"] ?? "", ENT_QUOTES, "UTF-8") ?>
+					</p>
 					<p><strong>Topik yang Diminati:</strong>
-						<?= htmlspecialchars(implode(", ", $_SESSION["minat"] ?? []), ENT_QUOTES, "UTF-8") ?>
+						<?= bersihkan(implode(", ", $_SESSION["minat"] ?? []), ENT_QUOTES, "UTF-8") ?>
 					</p>
 					<p><strong>Program Studi:</strong>
-						<?= htmlspecialchars($_SESSION["prodi"] ?? "", ENT_QUOTES, "UTF-8") ?></p>
-					<p><strong>Pesan:</strong> <?= nl2br(htmlspecialchars($_SESSION["pesan"] ?? "", ENT_QUOTES, "UTF-8")) ?>
+						<?= bersihkan($_SESSION["prodi"] ?? "", ENT_QUOTES, "UTF-8") ?>
+					</p>
+					<p><strong>Pesan:</strong> <?= nl2br(bersihkan($_SESSION["pesan"] ?? "", ENT_QUOTES, "UTF-8")) ?>
 					</p>
 				</article>
 			<?php endif; ?>
