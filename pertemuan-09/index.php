@@ -1,10 +1,8 @@
 <?php
 session_start();
 
-function bersihkan($teks)
-{
-	return htmlspecialchars($teks ?? "", ENT_QUOTES, "UTF-8");
-}
+include("fungsi.php");
+
 
 echo ("<p> hai </p>");
 
